@@ -21,6 +21,11 @@ jobs:
       contents: write
     
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: repo
+
       - name: Get OS version
         run: |
           echo "OS_VERSION=$(sw_vers -productVersion | cut -d . -f 1,2)" >> $GITHUB_ENV
@@ -122,7 +127,7 @@ jobs:
           wget https://download.gnome.org/sources/gtk+/3.24/gtk%2B-3.24.43.tar.xz
           tar xzf gtk+-3.24.43.tar.xz
           cd gtk+-3.24.43
-          patch -p1 < ../repo/tools/osx/gdk-window-quartz-colorspace.patch
+          patch -p1 < ../repo/patches/macos/gdk-window-quartz-colorspace.patch
           INSTDIR=/opt/art-deps/gtk 
           meson setup build
           meson configure build \
