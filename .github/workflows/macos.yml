@@ -145,7 +145,7 @@ jobs:
 
       - name: Prepare tarball
         run: |
-          ARTIFACT_NAME="ART-toolchain_macOS-${OS_VERSION}_${{ matrix.arch }}.tar.xz"
+          ARTIFACT_NAME="ART-toolchain_macOS-${OS_VERSION}_${{ matrix.arch }}.tar.gz"
           echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
           if [ "$GITHUB_REF_TYPE" = "tag" ]; then
               echo "RELEASE_TAG=${ART_VERSION}" >> $GITHUB_ENV
@@ -154,7 +154,7 @@ jobs:
               echo "RELEASE_TAG=nightly" >> $GITHUB_ENV
               echo "RELEASE_MAKE_LATEST=false" >> $GITHUB_ENV
           fi
-          tar cJf "$ARTIFACT_NAME" /opt/local /opt/art-deps
+          sudo tar czf "$ARTIFACT_NAME" /opt/local /opt/art-deps
 
       - name: Publish release
         uses: ncipollo/release-action@v1
